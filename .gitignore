@@ -1,5 +1,5 @@
 # Configuration file
-#config.yml push empty config file in the inital commit
+config.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

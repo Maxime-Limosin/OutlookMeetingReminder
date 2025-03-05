@@ -22,8 +22,19 @@ python main.py
 ```
 
 ## Usage
-You'll have to fill the config.yml file:
+You'll have to create the conf.yml file:
 * email: your outlook email
 * password: your outlook password
 * serverAddress: **ex5.mail.ovh.net**, should not change
 * token: the token of the SynologyChat incoming webhook
+
+Exemple:
+```yaml
+outlook:
+  email: maxime@diodon.fr
+  password: mySuperPassword
+  serverAddress: ex5.mail.ovh.net
+  
+synology:
+  token: mySuperToken
+```

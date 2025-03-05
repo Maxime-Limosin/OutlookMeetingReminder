@@ -5,7 +5,7 @@ from meetingManager import MeetingManager
 from meeting import Meeting
 from chatmessagesender import ChatMessageSender
 
-YAML_FILE_NAME = 'config.yml'
+YAML_FILE_NAME = 'conf.yml'
 
 def main():
     meetings: List[Meeting] = []

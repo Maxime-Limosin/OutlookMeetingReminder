@@ -69,4 +69,4 @@ class MeetingManager:
         if meetings == None:
             return None
         
-        return [m for m in meetings if (m.start - now).days > days]
+        return [m for m in meetings if (m.start - now).days < days]

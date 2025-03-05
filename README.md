@@ -38,3 +38,19 @@ outlook:
 synology:
   token: mySuperToken
 ```
+
+## Run code automatically
+On Linux:
+```bash
+sudo apt install crontab -y
+crontab -e # Choose nano (1st option)
+```
+
+Inside crontab, add this ligne:
+```
+0 17 * * 1-5 /usr/bin/python3 [path to project]/main.py
+```
+
+This will call the program /usr/bin/python3, with the main.py as argument. It'll be called at 17h00 the 1st to 5th day of the week (Monday to Friday).
+
+Check if you have the same python path as me (with the command _which python3_).

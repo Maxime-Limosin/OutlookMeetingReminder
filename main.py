@@ -1,3 +1,5 @@
+import os.path
+from pathlib import Path
 from typing import List
 
 from config import Config
@@ -6,12 +8,20 @@ from meeting import Meeting
 from chatmessagesender import ChatMessageSender
 
 YAML_FILE_NAME = 'conf.yml'
+PROJECT_FOLDER = 'MeetingReminder'
 
 def main():
+    confFilePath: str = ''
     meetings: List[Meeting] = []
     
+    # Check if yaml file is in the same folder
+    if os.path.isfile(YAML_FILE_NAME):
+        confFilePath = YAML_FILE_NAME
+    else:
+        confFilePath = Path.home() / PROJECT_FOLDER / YAML_FILE_NAME # Otherwise, look in the home of the user, in the project folder	
+    
     # Load user settings from the yaml file
-    config = Config(YAML_FILE_NAME)
+    config = Config(confFilePath)
     email = config.outlookEmail 
     password = config.outlookPassword
     outlookServerAddress =  config.outlookServerAddress

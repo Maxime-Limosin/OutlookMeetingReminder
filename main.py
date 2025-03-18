@@ -5,7 +5,7 @@ from typing import List
 from config import Config
 from meetingManager import MeetingManager
 from meeting import Meeting
-from chatmessagesender import ChatMessageSender
+from chatMessageSender import ChatMessageSender
 
 YAML_FILE_NAME = 'conf.yml'
 PROJECT_FOLDER = 'MeetingReminder'
@@ -33,13 +33,18 @@ def main():
     # Create an object to interact with SynologyChat
     chatMessageSender = ChatMessageSender(config.synologyWebhookToken)
     
-    if meetings == None:
+    if meetings == None or len(meetings) == 0:
         return
     
-    for m in meetings:
-        message = f"Réunion {m.title}, le {m.getDay()}, de {m.getStart()} à {m.getEnd()}, organisée par {m.organizer}"
-        chatMessageSender.sendChatMessage(message)
-
+    message: str = ""
+    if len(meetings) == 1: # If there's only one meeting
+        message = f"Réunion '{m.title}', le {m.getDay()}, de {m.getStart()} à {m.getEnd()}, organisée par {m.organizer}"
+        
+    else: # If there's some meetings
+        for m in meetings:
+            message += f"* Réunion *{m.title}* le {m.getDay()}, de {m.getStart()} à {m.getEnd()}, organisée par {m.organizer}\n"
+            
+    chatMessageSender.sendChatMessage(message) # Can only send one message at a time, so I added all them up into one string
 
 if __name__ == "__main__":
     main()

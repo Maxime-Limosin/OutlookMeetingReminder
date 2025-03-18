@@ -64,7 +64,7 @@ class MeetingManager:
 
     def getMeetingsWithinDays(self, days: int = 1) -> List[Meeting]:
         meetings = self.getMeetings()
-        now = UTC_NOW()
+        now = UTC_NOW() + timedelta(hours=1) # Convert UTC into UTC+1
         
         if meetings == None:
             return None

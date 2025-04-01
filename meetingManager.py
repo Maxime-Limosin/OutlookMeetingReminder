@@ -1,10 +1,13 @@
 from exchangelib import Credentials, Account, Configuration, DELEGATE
 from exchangelib.ewsdatetime import UTC_NOW
 from datetime import timedelta
+import pytz
 
 from typing import List
 from meeting import Meeting
 
+# Define the France timezone
+FRANCE_TZ = pytz.timezone('Europe/Paris')
 
 class MeetingManager:
     email: str = ""
@@ -53,8 +56,10 @@ class MeetingManager:
         meetings = []
         
         for item in self.account.calendar.filter(start__gte=UTC_NOW()):
-            startTimeFr = item.start + timedelta(hours=1) # Convert UTC into UTC+1
-            endTimeFr = item.end + timedelta(hours=1)  
+            # Convert UTC start and end times to France timezone
+            startTimeFr = item.start.astimezone(FRANCE_TZ)
+            endTimeFr = item.end.astimezone(FRANCE_TZ)
+            
             organizer = item.organizer.name
             
             m = Meeting(item.subject, startTimeFr, endTimeFr, item.is_cancelled, organizer)
@@ -64,7 +69,7 @@ class MeetingManager:
 
     def getMeetingsWithinDays(self, days: int = 1) -> List[Meeting]:
         meetings = self.getMeetings()
-        now = UTC_NOW() + timedelta(hours=1) # Convert UTC into UTC+1
+        now = UTC_NOW().astimezone(FRANCE_TZ) # Get the current time in France timezone
         
         if meetings == None:
             return None

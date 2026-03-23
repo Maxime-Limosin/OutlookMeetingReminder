@@ -38,6 +38,7 @@ def main():
     
     message: str = ""
     if len(meetings) == 1: # If there's only one meeting
+        m: Meeting = meetings[0]
         message = f"Réunion '{m.title}', le {m.getDay()}, de {m.getStart()} à {m.getEnd()}, organisée par {m.organizer}"
         
     else: # If there's some meetings
